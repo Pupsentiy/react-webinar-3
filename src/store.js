@@ -38,14 +38,25 @@ class Store {
     for (const listener of this.listeners) listener();
   }
 
+  generationCode() {
+    let randomNumber;
+    do {
+      // Generate a random number between 0 and 10
+      randomNumber = Math.floor(Math.random() * this.state.list.length * 10);
+    } while (this.state.list.some(item => item.code === randomNumber));
+
+    return randomNumber;
+  }
+
   /**
    * Добавление новой записи
    */
   addItem() {
-    this.setState({
-      ...this.state,
-      list: [...this.state.list, {code: this.state.list.length + 1, title: 'Новая запись'}]
-    })
+    let code = this.generationCode()
+      this.setState({
+        ...this.state,
+        list: [...this.state.list, {code: code, title: 'Новая запись'}]
+      })
   };
 
   /**
@@ -69,8 +80,33 @@ class Store {
       list: this.state.list.map(item => {
         if (item.code === code) {
           item.selected = !item.selected;
+        }else{
+          item.selected = false
         }
         return item;
+      })
+    })
+  }
+
+  hoverItem(code){
+    let num = 1
+
+    this.setState({
+      ...this.state,
+      list:this.state.list.map(item => {
+
+        if(item.code === code){
+          if(item.hoverNum === undefined){
+            item.hoverNum = num
+          }else{
+            if(!item.selected){
+              return item
+            }else{
+              ++item.hoverNum
+            }
+          }
+        }
+        return item
       })
     })
   }
