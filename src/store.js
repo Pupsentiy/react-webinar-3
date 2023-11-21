@@ -40,9 +40,15 @@ class Store {
   }
 
   generationCode() {
-   const item = this.state.list[this.state.list.length -1]
-    if(!this.state.list.length) return this.state.initialLength + 1
-    return item.code + 1
+    if(!this.state.list.length) {
+      this.setState({
+        ...this.state,
+        initialLength: this.state.initialLength
+      })
+      return this.state.initialLength + 1
+    }
+
+    return this.state.initialLength + 1
   }
 
   /**
@@ -52,7 +58,8 @@ class Store {
     let code = this.generationCode()
       this.setState({
         ...this.state,
-        list: [...this.state.list, {code: code, title: 'Новая запись'}]
+        list: [...this.state.list, {code: code, title: 'Новая запись'}],
+        initialLength: this.state.initialLength + 1
       })
   };
 
@@ -64,7 +71,7 @@ class Store {
     this.setState({
       ...this.state,
       list: this.state.list.filter(item => item.code !== code),
-      initialLength:this.state.list[this.state.list.length -1].code
+      initialLength:code > this.state.initialLength ? code + 1 : this.state.initialLength
     })
   };
 
