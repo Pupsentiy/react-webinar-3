@@ -4,6 +4,7 @@
 class Store {
   constructor(initState = {}) {
     this.state = initState;
+    this.initialLength = initState.initialLength;
     this.listeners = []; // Слушатели изменений состояния
   }
 
@@ -39,13 +40,9 @@ class Store {
   }
 
   generationCode() {
-    let randomNumber;
-    do {
-      // Generate a random number between 0 and 10
-      randomNumber = Math.floor(Math.random() * this.state.list.length * 10);
-    } while (this.state.list.some(item => item.code === randomNumber));
-
-    return randomNumber;
+   const item = this.state.list[this.state.list.length -1]
+    if(!this.state.list.length) return this.state.initialLength + 1
+    return item.code + 1
   }
 
   /**
@@ -66,7 +63,8 @@ class Store {
   deleteItem(code) {
     this.setState({
       ...this.state,
-      list: this.state.list.filter(item => item.code !== code)
+      list: this.state.list.filter(item => item.code !== code),
+      initialLength:this.state.list[this.state.list.length -1].code
     })
   };
 
