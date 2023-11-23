@@ -4,8 +4,11 @@
 class Store {
   constructor(initState = {}) {
     this.state = initState;
-    this.initialLength = initState.initialLength;
     this.listeners = []; // Слушатели изменений состояния
+    this.setState({
+      ...this.state,
+      initialLength:this.state.list.length
+    })
   }
 
   /**
@@ -61,6 +64,7 @@ class Store {
         list: [...this.state.list, {code: code, title: 'Новая запись'}],
         initialLength: this.state.initialLength + 1
       })
+    console.log(this.state.list.length)
   };
 
   /**
@@ -85,6 +89,10 @@ class Store {
       list: this.state.list.map(item => {
         if (item.code === code) {
           item.selected = !item.selected;
+          if(item.selected){
+            item.selectedNum = item.selectedNum ? ++item.selectedNum : 1
+          }
+
         }else{
           item.selected = false
         }
@@ -93,28 +101,6 @@ class Store {
     })
   }
 
-  hoverItem(code){
-    let num = 1
-
-    this.setState({
-      ...this.state,
-      list:this.state.list.map(item => {
-
-        if(item.code === code){
-          if(item.hoverNum === undefined){
-            item.hoverNum = num
-          }else{
-            if(!item.selected){
-              return item
-            }else{
-              ++item.hoverNum
-            }
-          }
-        }
-        return item
-      })
-    })
-  }
 }
 
 export default Store;
