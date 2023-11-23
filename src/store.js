@@ -64,7 +64,6 @@ class Store {
         list: [...this.state.list, {code: code, title: 'Новая запись'}],
         initialLength: this.state.initialLength + 1
       })
-    console.log(this.state.list.length)
   };
 
   /**
