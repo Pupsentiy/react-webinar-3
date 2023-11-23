@@ -16,7 +16,6 @@ const store = new Store({
     {code: 7, title: 'Седьмая запись'},
   ],
 });
-console.log(store)
 const root = createRoot(document.getElementById('root'));
 
 store.subscribe(() => {
