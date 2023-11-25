@@ -80,9 +80,11 @@ class Store {
 
   /**
    * Выделение записи по коду
+   * @param { MouseEvent<HTMLDivElement>} e
    * @param code
    */
-  selectItem(code) {
+  selectItem(e, code) {
+    if (e.target instanceof HTMLButtonElement && e.target.id === 'delete') return;
     this.setState({
       ...this.state,
       list: this.state.list.map(item => {

@@ -23,13 +23,13 @@ function App({store}) {
           list.map(item =>
             <div key={item.code} className='List-item'>
               <div className={'Item' + (item.selected ? ' Item_selected' : '')}
-                   onClick={() => {
-                       store.selectItem(item.code)
+                   onClick={(e) => {
+                       store.selectItem(e ,item.code)
                    }}>
                 <div className='Item-code'>{item.code}</div>
                 <div className='Item-title'>{item.title} {item.selectedNum && `| Выделяли ${item.selectedNum} ${getNoun(item.selectedNum)}` }  </div>
                 <div className='Item-actions'>
-                  <button onClick={() => store.deleteItem(item.code)}>
+                  <button onClick={() => store.deleteItem(item.code)} id={'delete'}>
                     Удалить
                   </button>
                 </div>
