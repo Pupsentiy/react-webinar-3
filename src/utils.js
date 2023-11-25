@@ -28,19 +28,19 @@ export function createElement(name, props = {}, ...children) {
 }
 
 
-export function getNoun(number) {
+export function getNoun(number, one='раз', two='раза', three='раз') {
   let n = Math.abs(number);
   n %= 100;
   if (n >= 5 && n <= 20) {
-    return 'раз';
+    return three;
   }
   n %= 10;
   if (n === 1) {
-    return 'раз';
+    return one;
   }
   if (n >= 2 && n <= 4) {
-    return 'раза';
+    return two;
   }
-  return 'раз';
+  return three;
 }
 
