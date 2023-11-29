@@ -1,0 +1,19 @@
+.CartModal-wrapper-content{
+border-radius: 12px;
+  overflow: hidden;
+
+  .CartModal-wrapper-list{
+    padding-top: 71px;
+  }
+
+  .CartModal-total{
+    display: flex;
+    justify-content: flex-end;
+    font-weight: bold;
+    padding: 20px 120px 89px 10px;
+  }
+
+  .CartModal-total > span{
+    margin-right: 53px;
+  }
+}

@@ -1,21 +1,34 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import './style.css';
+import {plural, totalPrice} from "../../utils";
 
-function Controls({onAdd}) {
+function Controls({openModal, cart}) {
   return (
     <div className='Controls'>
-      <button onClick={() => onAdd()}>Добавить</button>
+      <div className="Controls-number-item">
+        В корзине:
+        {!cart.length ?
+          <span>пусто</span>
+          :
+          <span>{cart.length} {plural(cart.length, {
+            one: 'товар',
+            few: 'товара',
+            many: 'товаров'
+          })} / {totalPrice(cart)} ₽</span>}
+      </div>
+      <button onClick={openModal}>Перейти</button>
     </div>
   )
 }
 
 Controls.propTypes = {
-  onAdd: PropTypes.func
+  openModal: PropTypes.func.isRequired,
+  cart:PropTypes.array.isRequired
 };
 
 Controls.defaultProps = {
-  onAdd: () => {}
+  openModal: () => {}
 }
 
 export default React.memo(Controls);

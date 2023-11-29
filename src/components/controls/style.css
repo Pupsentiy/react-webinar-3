@@ -2,4 +2,11 @@
   display: flex;
   justify-content: flex-end;
   padding: 20px;
+
+  .Controls-number-item > span{
+    font-weight: bold;
+    margin: 0 10px;
+  }
+
+
 }

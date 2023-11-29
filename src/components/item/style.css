@@ -2,6 +2,7 @@
   display: flex;
   justify-content: flex-start;
   transition: background-color 1s;
+  align-items: center;
 }
 
 .Item_selected {
@@ -14,12 +15,40 @@
 }
 
 .Item-title {
-  width: 100%;
+  width: 70%;
   padding: 20px 10px;
+}
+
+.Item-price{
+  display: flex;
+  align-items: center;
+}
+
+.Item-quantity{
+  margin-left: 62px;
+  margin-right: 14px;
+}
+.Item-quantity > span{
+  margin-left: 5px;
+}
+
+.Item-price > span{
+  margin-left: 5px
 }
 
 .Item-actions {
   display: flex;
   justify-content: flex-end;
   padding: 20px 20px 20px 10px;
+}
+
+.Item-wrapper-element{
+  display: flex;
+  width: 100%;
+}
+.Item-wrapper-price{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 30%;
 }
