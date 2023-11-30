@@ -13,7 +13,7 @@ function Item(props) {
   }
 
   return (
-    <div className={cn() + (props.item.selected ? ' Item_selected' : '')}>
+    <div className={cn()}>
       <div className={cn('code')}>{props.item.code}</div>
       <div className={cn("wrapper-element")}>
         <div className={cn('title')}>
