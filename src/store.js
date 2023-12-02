@@ -52,9 +52,9 @@ class Store {
       cart: findItem ?  this.state.cart.map((el) => {
         if(el.code === code){
           ++el.quantity
-         return Object.assign({}, el)
+         return el
         }
-        return Object.assign({}, el)
+        return el
       }) :[...this.state.cart, {
         ...item, quantity: 1
       }]
