@@ -51,7 +51,5 @@ export function generateCode2() {
   return generateCode2.value ? ++generateCode2.value : generateCode2.value = 1;
 }
 
-export function totalPrice(items) {
-  return items.reduce((sum, obj) => obj.price * obj.quantity + sum, 0);
-}
+
 

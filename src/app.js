@@ -13,19 +13,22 @@ import {CartModal} from "./components/cart-modal";
 function App({store}) {
   const [isOpenModal, setIsOpenModal] = useState(false)
 
-  const { list, cart } = store.getState();
+  const { list, cart, totalPrice  } = store.getState();
 
   const callbacks = {
-    onDelete: useCallback((item) => {
-      store.deleteItem(item);
+    onDelete: useCallback((code) => {
+      store.deleteItem(code);
+      store.totalPrice()
     }, [store]),
 
-    onAddItem: useCallback((item) => {
-      store.addItem(item);
+    onAddItem: useCallback((code) => {
+      store.addItem(code);
+      store.totalPrice()
     }, [store]),
     onToggleModal: useCallback(() => {
       setIsOpenModal(!isOpenModal)
-    }, [store, isOpenModal])
+    }, [store, isOpenModal]),
+
   }
 
 
@@ -33,7 +36,7 @@ function App({store}) {
   return (
     <PageLayout>
       <Head title='Магазин' />
-      <Controls openModal={callbacks.onToggleModal} cart={cart}/>
+      <Controls openModal={callbacks.onToggleModal} cart={cart} totalPrice={totalPrice}/>
       <List list={list}
             onAction={callbacks.onAddItem}
             />
@@ -41,6 +44,7 @@ function App({store}) {
         isOpenModal={isOpenModal}
         toggleModal={callbacks.onToggleModal}
         onDelete={callbacks.onDelete}
+        totalPrice={totalPrice}
         cart={cart}
       />
     </PageLayout>

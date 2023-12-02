@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import './style.css';
-import {plural, totalPrice} from "../../utils";
+import { plural } from "../../utils";
 
-function Controls({openModal, cart}) {
+function Controls({openModal, cart, totalPrice}) {
   return (
     <div className='Controls'>
       <div className="Controls-number-item">
@@ -15,7 +15,7 @@ function Controls({openModal, cart}) {
             one: 'товар',
             few: 'товара',
             many: 'товаров'
-          })} / {totalPrice(cart)} ₽</span>}
+          })} / {totalPrice} ₽</span>}
       </div>
       <button onClick={openModal}>Перейти</button>
     </div>
@@ -24,7 +24,8 @@ function Controls({openModal, cart}) {
 
 Controls.propTypes = {
   openModal: PropTypes.func.isRequired,
-  cart:PropTypes.array.isRequired
+  cart:PropTypes.array.isRequired,
+  totalPrice:PropTypes.number
 };
 
 Controls.defaultProps = {

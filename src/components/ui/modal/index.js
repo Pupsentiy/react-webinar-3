@@ -24,7 +24,7 @@ export const Modal = (props) => {
   }
 
   return (
-    <Portal>
+    <Portal element={document.querySelector('.PageLayout')}>
       <section
         className={`${cn()} ${isOpen ? 'opened' : 'isClosing'}` }
       >

@@ -3,6 +3,10 @@
   justify-content: flex-start;
   transition: background-color 1s;
   align-items: center;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0;
 }
 
 .Item-code {
@@ -17,11 +21,20 @@
 .Item-price{
   display: flex;
   align-items: center;
+  color: #404040;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0;
 }
 
 .Item-quantity{
   margin-left: 62px;
   margin-right: 14px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0;
 }
 .Item-quantity > span{
   margin-left: 5px;

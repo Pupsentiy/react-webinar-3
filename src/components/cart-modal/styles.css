@@ -9,8 +9,13 @@ border-radius: 12px;
   .CartModal-total{
     display: flex;
     justify-content: flex-end;
-    font-weight: bold;
     padding: 20px 120px 89px 10px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 21px;
+    letter-spacing: 0;
+    text-align: right;
+
   }
 
   .CartModal-total > span{

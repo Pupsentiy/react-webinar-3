@@ -41,14 +41,16 @@ class Store {
 
   /**
    * Добавление товара в корзину
-   * @param item
+   * @param code
    */
-  addItem(item) {
-    const findItem = this.state.cart.find((obj) => obj.code === item.code);
+  addItem(code) {
+    const item = this.state.list.find((obj) => obj.code === code);
+    const findItem = this.state.cart.find((obj) => obj.code === code);
+
     this.setState({
       ...this.state,
-      cart:  findItem ?  this.state.cart.map((el) => {
-        if(el.code === item.code){
+      cart: findItem ?  this.state.cart.map((el) => {
+        if(el.code === code){
           ++el.quantity
          return Object.assign({}, el)
         }
@@ -61,15 +63,22 @@ class Store {
 
   /**
    * Удаление товара из корзины
-   * @param product
+   * @param code
    */
-  deleteItem(product) {
+  deleteItem(code) {
     this.setState({
       ...this.state,
       // Новый список, в котором не будет удаляемой записи
-      cart: this.state.cart.filter(item => item.code !== product.code)
+      cart: this.state.cart.filter(item => item.code !== code)
     })
   };
+
+  totalPrice(){
+    this.setState({
+      ...this.state,
+      totalPrice: this.state.cart.length ? this.state.cart.reduce((sum, obj) => obj.price * obj.quantity + sum, 0) : 0
+    })
+  }
 }
 
 export default Store;

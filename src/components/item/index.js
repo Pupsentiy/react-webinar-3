@@ -7,8 +7,8 @@ function Item(props) {
   const cn = bem('Item');
 
   const callbacks = {
-    onAction: (item) => {
-      props.onAction(item);
+    onAction: (code) => {
+      props.onAction(code);
     }
   }
 
@@ -27,9 +27,9 @@ function Item(props) {
         </div>
       </div>
       <div className={cn('actions')}>
-        {props.cartFlag ? <button  onClick={() => callbacks.onAction(props.item)}>
+        {props.cartFlag ? <button  onClick={() => callbacks.onAction(props.item.code)}>
           Удалить
-        </button> : <button onClick={() => callbacks.onAction(props.item)}>
+        </button> : <button onClick={() => callbacks.onAction(props.item.code)}>
           Добавить
         </button>}
       </div>
