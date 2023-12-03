@@ -5,6 +5,7 @@ import List from "../list";
 import './styles.css'
 import {cn as bem} from "@bem-react/classname";
 import PropTypes from "prop-types";
+import {formatNumber} from "../../utils";
 export const CartModal = (props) => {
   const cn = bem('CartModal')
 
@@ -18,7 +19,7 @@ export const CartModal = (props) => {
         </div>
       }
       <div className={cn("total")}>
-        <span>Итого</span>{props?.totalPrice} ₽
+        <span>Итого</span>{formatNumber(props.totalPrice)}
       </div>
     </div>
     </Modal>

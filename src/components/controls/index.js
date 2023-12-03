@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import './style.css';
-import { plural } from "../../utils";
+import {formatNumber, plural} from "../../utils";
 
 function Controls({openModal, cart, totalPrice}) {
   return (
@@ -15,7 +15,7 @@ function Controls({openModal, cart, totalPrice}) {
             one: 'товар',
             few: 'товара',
             many: 'товаров'
-          })} / {totalPrice} ₽</span>}
+          })} / {formatNumber(totalPrice)}</span>}
       </div>
       <button onClick={openModal}>Перейти</button>
     </div>

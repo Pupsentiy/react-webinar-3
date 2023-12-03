@@ -51,5 +51,13 @@ export function generateCode2() {
   return generateCode2.value ? ++generateCode2.value : generateCode2.value = 1;
 }
 
+export const formatNumber = (number) => {
+  const f = new Intl.NumberFormat("ru", {
+    style: "currency",
+    currency: "RUB",
+    maximumFractionDigits: 0,
+  });
 
+  return f.format(number);
+}
 
