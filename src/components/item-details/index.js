@@ -13,7 +13,7 @@ function ItemDetails(props) {
   }));
 
  if(!select.item){
-   return <div>Товар утерян</div>
+   return <div>{changeLang(select.toggleLang,'Товар не найден!')}</div>
  }
 
   const callbacks = {
