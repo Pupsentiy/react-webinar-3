@@ -1,7 +1,7 @@
 /* Контрол с общими действиями */
 .BasketTool {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 20px;
   font-size: 18px;
 }
@@ -13,4 +13,16 @@
 .BasketTool-total {
   font-weight: bold;
   margin: 0 20px;
+}
+
+.BasketTool-link-home{
+  color: #0087E9;
+}
+
+.BasketTool-link-home:hover{
+  color:#0069b6;
+}
+
+.BasketTool-link-home:active{
+  color:#0087E9;
 }

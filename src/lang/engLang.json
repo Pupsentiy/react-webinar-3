@@ -1,0 +1,22 @@
+{
+  "Магазин": "Store",
+  "Добавить": "Add",
+  "Перейти": "Go",
+  "Закрыть": "Close",
+  "Удалить": "Remove",
+  "Корзина": "Basket",
+  "Главная": "Main",
+  "В корзине": "In the basket",
+  "пусто": "empty",
+  "товар": "product",
+  "товара": "products",
+  "товаров": "products",
+  "шт": "pieces",
+  "Итого": "Total",
+  "Страница не найдена": "Page not found",
+  "На главную": "Back to Main",
+  "Страна производитель": "Country of production",
+  "Категория": "Category",
+  "Цена": "Price",
+  "Год выпуска": "Year of production"
+}

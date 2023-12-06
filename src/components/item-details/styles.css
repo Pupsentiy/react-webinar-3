@@ -1,0 +1,22 @@
+.ItemDetails  {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0;
+  text-align: left;
+  padding: 41px 41px 0 41px;
+}
+
+.ItemDetails > p {
+  margin: 20px 0;
+}
+
+.ItemDetails-price{
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28px;
+}
+
+p > strong{
+  margin-left: 5px;
+}

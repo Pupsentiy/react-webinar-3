@@ -1,3 +1,6 @@
+import ruLang from './lang/ruLang.json'
+import engLang from './lang/engLang.json'
+
 /**
  * Плюрализация
  * Возвращает вариант с учётом правил множественного числа под указанную локаль
@@ -27,9 +30,15 @@ export function codeGenerator(start = 0) {
 /**
  * Форматирование разрядов числа
  * @param value {Number}
+ * @param locale
  * @param options {Object}
  * @returns {String}
  */
 export function numberFormat(value, locale = 'ru-RU', options = {}) {
   return new Intl.NumberFormat(locale, options).format(value);
 }
+
+export function changeLang(toggle, str){
+  return !toggle ? ruLang[str] : engLang[str]
+}
+
