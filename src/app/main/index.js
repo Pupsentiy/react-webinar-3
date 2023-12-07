@@ -1,4 +1,4 @@
-import {memo, useCallback, useEffect} from 'react';
+import {Fragment, memo, useCallback, useEffect, useState} from 'react';
 import Item from "../../components/item";
 import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
@@ -8,10 +8,11 @@ import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import Pagination from "../../components/pagination";
 import {changeLang} from "../../utils";
+import Loader from "../../components/loader";
 
 function Main() {
-
   const store = useStore();
+  const [loading, setLoading] = useState(false)
 
   const select = useSelector(state => ({
     count:  state.catalog.count,
@@ -23,8 +24,14 @@ function Main() {
     toggleLang:state.toggleLang.toggle
   }));
 
+  const fetchItems = async () => {
+    setLoading(true)
+    await store.actions.catalog.load(select.limit,select.page);
+    setLoading(false)
+  }
+
   useEffect(() => {
-    store.actions.catalog.load(select.limit,select.page);
+    void  fetchItems()
   }, [select.limit, select.page]);
 
   const callbacks = {
@@ -48,10 +55,19 @@ function Main() {
   return (
     <PageLayout>
       <Head title={changeLang(select.toggleLang,'Магазин')} />
-      <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
-                  sum={select.sum}/>
-      <List list={select.list} renderItem={renders.item}/>
-      <Pagination pagination={callbacks.setPage}/>
+      <BasketTool
+        onOpen={callbacks.openModalBasket}
+        amount={select.amount}
+        sum={select.sum}
+      />
+      {loading
+        ?
+        <Loader/>
+        :
+        <Fragment>
+        <List list={select.list} renderItem={renders.item}/>
+        <Pagination pagination={callbacks.setPage}/>
+        </Fragment>}
     </PageLayout>
 
   );
