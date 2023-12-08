@@ -48,3 +48,9 @@
   background: #0087E9;
   border: none;
 }
+
+.active:hover{
+  color:#fff;
+  background: #0087E9;
+  border: none;
+}
