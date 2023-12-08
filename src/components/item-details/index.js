@@ -1,51 +1,62 @@
 import {memo} from "react";
 import {cn as bem} from "@bem-react/classname";
-import useSelector from "../../store/use-selector";
 import {changeLang, numberFormat} from "../../utils";
 import './styles.css'
 import PropTypes from "prop-types";
 function ItemDetails(props) {
   const cn = bem('ItemDetails');
 
-  const select = useSelector(state => ({
-   item: state.itemDetails.item,
-   toggleLang:state.toggleLang.toggle
-  }));
-
- if(!select.item){
-   return <div className='error'>{changeLang(select.toggleLang,'Товар не найден!')} loading</div>
+ if(!props.item){
+   return <div className='error'>{changeLang(props.toggleLang,'Товар не найден!')} loading</div>
  }
 
   const callbacks = {
     onAdd: () => props.addProductBasket({
-      _id: select.item._id,
-      price: select.item.price,
+      _id: props.item._id,
+      price: props.item.price,
+      title:props.item.title
     })
   }
 
   return (
       <div className={cn()}>
-        <p className={cn('description')}>{select.item?.description}</p>
+        <p className={cn('description')}>{props.item?.description}</p>
         <p className={cn('production')}>
-          {changeLang(select.toggleLang,'Страна производитель')}:
+          {changeLang(props.toggleLang,'Страна производитель')}:
           <strong>
-            {select.item?.madeIn?.title}{` (${select.item?.madeIn?.code})`}
+            {props.item?.madeIn?.title}{` (${props.item?.madeIn?.code})`}
           </strong>
         </p>
-        <p className={cn('category')}>{changeLang(select.toggleLang,'Категория')}:<strong>{select.item?.category?.title}</strong></p>
-        <p className={cn('year-production')}>{changeLang(select.toggleLang,'Год выпуска')}:<strong>{select.item?.edition}</strong></p>
-        <p className={cn('price')}>{changeLang(select.toggleLang,'Цена')}: {numberFormat(select.item?.price)} ₽</p>
-        <button onClick={callbacks.onAdd}>{changeLang(select.toggleLang,'Добавить')}</button>
+        <p className={cn('category')}>{changeLang(props.toggleLang,'Категория')}:<strong>{props.item?.category?.title}</strong></p>
+        <p className={cn('year-production')}>{changeLang(props.toggleLang,'Год выпуска')}:<strong>{props.item?.edition}</strong></p>
+        <p className={cn('price')}>{changeLang(props.toggleLang,'Цена')}: {numberFormat(props.item?.price)} ₽</p>
+        <button onClick={callbacks.onAdd}>{changeLang(props.toggleLang,'Добавить')}</button>
       </div>
   )
 }
 
 ItemDetails.propTypes = {
   addProductBasket: PropTypes.func,
+  item: PropTypes.shape({
+    _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    title: PropTypes.string,
+    description: PropTypes.string,
+    price: PropTypes.number,
+    madeIn: PropTypes.shape({
+      title: PropTypes.string,
+      code: PropTypes.string
+    }),
+    edition: PropTypes.number,
+    category: PropTypes.shape({
+      title: PropTypes.string,
+    }),
+  }),
+  toggleLang:PropTypes.bool
 };
 
 ItemDetails.defaultProps = {
   addProductBasket: () => {},
+  toggleLang:false
 }
 
 export default memo(ItemDetails)

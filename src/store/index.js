@@ -12,7 +12,6 @@ class Store {
      * basket: Basket,
      * catalog: Catalog,
      * modals: Modals,
-     * pagination:Pagination,
      * itemDetails:ItemDetails,
      * toggleLang:ToggleLang
      * }} */

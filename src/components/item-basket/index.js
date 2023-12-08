@@ -5,13 +5,9 @@ import {cn as bem} from "@bem-react/classname";
 import PropTypes from "prop-types";
 import './style.css';
 import {Link} from "react-router-dom";
-import useSelector from "../../store/use-selector";
 
 function ItemBasket(props) {
   const cn = bem('ItemBasket');
-  const select = useSelector(state => ({
-    toggleLang:state.toggleLang.toggle
-  }));
 
   const callbacks = {
     onRemove: () => props.onRemove(props.item._id),
@@ -21,14 +17,14 @@ function ItemBasket(props) {
   return (
     <div className={cn()}>
       {/*<div className={cn('code')}>{props.item._id}</div>*/}
-      <Link to={`item-details/${props.item._id}`} className={cn('title')} onClick={callbacks.closeModal}>
+      <Link to={props.link} className={cn('title')} onClick={callbacks.closeModal}>
         {props.item.title}
       </Link>
       <div className={cn('right')}>
         <div className={cn('cell')}>{numberFormat(props.item.price)} ₽</div>
-        <div className={cn('cell')}>{numberFormat(props.item.amount || 0)} {changeLang(select.toggleLang, 'шт')}</div>
+        <div className={cn('cell')}>{numberFormat(props.item.amount || 0)} {changeLang(props.toggleLang, 'шт')}</div>
         <div className={cn('cell')}>
-          <button onClick={callbacks.onRemove}>{changeLang(select.toggleLang, 'Удалить')}</button>
+          <button onClick={callbacks.onRemove}>{changeLang(props.toggleLang, 'Удалить')}</button>
         </div>
       </div>
     </div>
@@ -42,11 +38,14 @@ ItemBasket.propTypes = {
     price: PropTypes.number,
     amount: PropTypes.number
   }).isRequired,
+  link:PropTypes.string,
   onRemove: propTypes.func,
+  toggleLang:PropTypes.bool
 }
 
 ItemBasket.defaultProps = {
   onRemove: () => {},
+  toggleLang:false
 }
 
 export default memo(ItemBasket);

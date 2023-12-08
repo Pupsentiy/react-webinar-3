@@ -7,15 +7,17 @@
 }
 
 .Pagination-dots{
-  color:#CCCCCC;
+  color: #CCCCCC;
   font-size: 16px;
   font-weight: 400;
   line-height: 18px;
   letter-spacing: 0;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   display: flex;
   justify-content: center;
+  padding: 1px;
+  cursor: default;
 }
 
 .Pagination-button{
@@ -29,7 +31,7 @@
   letter-spacing: 0;
   text-align: center;
   padding: 2px 1px;
-  width: 20px;
+  min-width:20px;
   height: 20px;
   display: flex;
   align-items: center;

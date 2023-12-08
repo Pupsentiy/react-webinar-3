@@ -9,6 +9,7 @@ import useSelector from "../../store/use-selector";
 import Pagination from "../../components/pagination";
 import {changeLang} from "../../utils";
 import Loader from "../../components/loader";
+import Navigation from "../../components/navigation";
 
 function Main() {
   const store = useStore();
@@ -17,22 +18,22 @@ function Main() {
   const select = useSelector(state => ({
     count:  state.catalog.count,
     list: state.catalog.list,
+    page: state.catalog.page,
     amount: state.basket.amount,
     sum: state.basket.sum,
-    page: state.pagination.page,
-    limit:  state.pagination.limit,
-    toggleLang:state.toggleLang.toggle
+    toggleLang:state.toggleLang.toggle,
+    limit:state.catalog.limit
   }));
 
   const fetchItems = async () => {
     setLoading(true)
-    await store.actions.catalog.load(select.limit,select.page);
+    await store.actions.catalog.load(select.page);
     setLoading(false)
   }
 
   useEffect(() => {
     void  fetchItems()
-  }, [select.limit, select.page]);
+  }, [select.page]);
 
   const callbacks = {
     // Добавление в корзину
@@ -40,7 +41,7 @@ function Main() {
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
 
-    setPage:useCallback((num) => store.actions.pagination.setPage(num),[store]),
+    setPage:useCallback((num) => store.actions.catalog.setPage(num),[store]),
 
     toggleLang: useCallback(() => store.actions.toggleLang.toggleLang(), [store])
 
@@ -48,25 +49,44 @@ function Main() {
 
   const renders = {
     item: useCallback((item) => {
-      return <Item item={item} onAdd={callbacks.addToBasket}/>
-    }, [callbacks.addToBasket]),
+      return <Item
+        item={item}
+        onAdd={callbacks.addToBasket}
+        toggleLang={select.toggleLang}
+        link={`item-details/${item._id}`}
+      />
+    }, [callbacks.addToBasket, select.toggleLang]),
   };
 
   return (
     <PageLayout>
-      <Head title={changeLang(select.toggleLang,'Магазин')} />
-      <BasketTool
-        onOpen={callbacks.openModalBasket}
-        amount={select.amount}
-        sum={select.sum}
+      <Head
+        title={changeLang(select.toggleLang,'Магазин')}
+        onToggle={callbacks.toggleLang}
+        toggleLang={select.toggleLang}
       />
+
+      <div className="inner-header">
+        <Navigation toggleLang={select.toggleLang}/>
+        <BasketTool
+          onOpen={callbacks.openModalBasket}
+          amount={select.amount}
+          sum={select.sum}
+          toggleLang={select.toggleLang}
+        />
+      </div>
       {loading
         ?
         <Loader/>
         :
         <Fragment>
         <List list={select.list} renderItem={renders.item}/>
-        <Pagination pagination={callbacks.setPage}/>
+        <Pagination
+          nextPage={callbacks.setPage}
+          count={select.count}
+          page={select.page}
+          limit={select.limit}
+        />
         </Fragment>}
     </PageLayout>
 

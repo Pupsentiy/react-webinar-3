@@ -4,11 +4,11 @@
   line-height: 21px;
   letter-spacing: 0;
   text-align: left;
-  padding: 41px 41px 0 41px;
+  padding: 23px 41px 0 41px;
 }
 
 .ItemDetails > p {
-  margin: 20px 0;
+  margin:0 0 20px 0;
 }
 
 .ItemDetails-price{
@@ -25,3 +25,4 @@ p > strong{
   display: flex;
   justify-content: center;
 }
+
