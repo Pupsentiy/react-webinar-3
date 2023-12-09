@@ -42,3 +42,5 @@ export function changeLang(toggle, str){
   return !toggle ? ruLang[str] : engLang[str]
 }
 
+
+

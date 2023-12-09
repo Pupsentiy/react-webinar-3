@@ -28,7 +28,6 @@ function ItemDetailsPage() {
     setLoading(false)
   }
 
-
   useEffect(() => {
    void fetchItemById()
   }, [id]);
@@ -38,6 +37,8 @@ function ItemDetailsPage() {
     addProductBasket: useCallback(product => store.actions.basket.addProductBasket(product), [store]),
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
+
+    setPage:useCallback((num) => store.actions.catalog.setPage(num),[store]),
 
     toggleLang: useCallback(() => store.actions.toggleLang.toggleLang(), [store])
   }
@@ -51,7 +52,7 @@ function ItemDetailsPage() {
       toggleLang={select.toggleLang}
     />}
   <div className="inner-header">
-    <Navigation toggleLang={select.toggleLang}/>
+    <Navigation toggleLang={select.toggleLang} setPage={callbacks.setPage}/>
     <BasketTool
       onOpen={callbacks.openModalBasket}
       amount={select.amount}

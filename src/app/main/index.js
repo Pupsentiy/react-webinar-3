@@ -43,7 +43,7 @@ function Main() {
 
     setPage:useCallback((num) => store.actions.catalog.setPage(num),[store]),
 
-    toggleLang: useCallback(() => store.actions.toggleLang.toggleLang(), [store])
+    toggleLang: useCallback(() => store.actions.toggleLang.toggleLang(), [store]),
 
   }
 
@@ -67,7 +67,7 @@ function Main() {
       />
 
       <div className="inner-header">
-        <Navigation toggleLang={select.toggleLang}/>
+        <Navigation toggleLang={select.toggleLang} setPage={callbacks.setPage}/>
         <BasketTool
           onOpen={callbacks.openModalBasket}
           amount={select.amount}

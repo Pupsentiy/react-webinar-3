@@ -6,22 +6,24 @@ import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 
 
-function Navigation({toggleLang}) {
+function Navigation({toggleLang, setPage}) {
   const cn = bem('Navigation');
 
   return (
     <div className={cn()}>
-      <Link to={'/'} className={cn('link-home')}>{changeLang(toggleLang, 'Главная')}</Link>
+      <Link to={'/'} className={cn('link-home')} onClick={() => setPage(1)}>{changeLang(toggleLang, 'Главная')}</Link>
     </div>
   )
 }
 
 Navigation.propTypes = {
-  toggleLang:PropTypes.bool
+  toggleLang:PropTypes.bool,
+  setPage:PropTypes.func
 };
 
 Navigation.defaultProps = {
-  toggleLang:false
+  toggleLang:false,
+  setPage:() => {}
 }
 
 export default memo(Navigation)
