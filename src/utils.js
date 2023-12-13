@@ -33,3 +33,40 @@ export function codeGenerator(start = 0) {
 export function numberFormat(value, locale = 'ru-RU', options = {}) {
   return new Intl.NumberFormat(locale, options).format(value);
 }
+
+export function sortOptions(categories , newMap= [], count= 0) {
+  if(!categories.length) return newMap
+  categories.forEach(category => {
+    const  newItem = {value: category._id, title: '- '.repeat(count)+category.title}
+    newMap.push(newItem)
+    if (category?.children?.length > 0) {
+      sortOptions(category.children,newMap, count + 1);
+    }
+  });
+ return newMap
+}
+
+
+export function treeShaping(arr) {
+  const roots = [],
+   map = [],
+    id = [];
+  arr.forEach(item => {
+    map.push(Object.assign( {},item))
+    id.push(item._id);
+  });
+  let i;
+  map.forEach(item => {
+    if (!item.parent?._id || (i = id.indexOf(item.parent?._id)) === -1 ) {
+      roots.push(item);
+      return;
+    }
+    if (map[i].children) {
+      map[i].children.push(item);
+    }
+    else {
+      map[i].children = [item];
+    }
+  } );
+  return roots;
+}

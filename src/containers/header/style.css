@@ -1,0 +1,9 @@
+.Header{
+  max-width: 1024px;
+  margin: 0 auto;
+  background: #fff;
+}
+
+.Header-button{
+  margin: 10px 20px;
+}

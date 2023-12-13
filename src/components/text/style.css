@@ -1,0 +1,39 @@
+.Text {
+
+}
+
+.Text_bold{
+  font-weight: bold
+}
+
+h1{
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 37px;
+  letter-spacing: 0;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+h2{
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+p{
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0;
+  text-align: center;
+  margin-top:18px;
+  margin-bottom: 0;
+}
+
+.Text_color_error{
+  color: #FF0000;
+  text-align: left;
+}
