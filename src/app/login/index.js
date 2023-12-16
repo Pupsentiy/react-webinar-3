@@ -11,13 +11,13 @@ import Text from "../../components/text";
 
 function Login() {
   const {t} = useTranslate();
-
+  const token = localStorage.getItem('token')
   const select = useSelector(state => ({
     user:state.user.user
   }))
 
-  if(select.user){
-    return <Navigate to={'/'}/>
+  if(token || select.user){
+    return <Navigate to={'/profile'} />
   }
 
   return (

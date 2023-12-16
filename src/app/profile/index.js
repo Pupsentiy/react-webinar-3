@@ -20,11 +20,11 @@ function Profile(){
   const token = window.localStorage.getItem('token')
 
  useInit(() =>{
-  void store.actions.user.userDetails()
+  void store.actions.userDetails.userDetails()
  } ,[])
 
   const select = useSelector(state => ({
-    user: state.user.user,
+    user: state.userDetails.user,
     waiting:state.user.waiting
   }))
 
@@ -41,7 +41,7 @@ function Profile(){
       <Spinner active={select.waiting}>
      <SideLayout padding={'medium'} position={'column'} align={'start'}>
        <Text title={t('user.profile')} headerVariant={'h2'}/>
-       <UserCard user={select.user}/>
+       <UserCard user={select.user} t={t}/>
      </SideLayout>
       </Spinner>
     </PageLayout>

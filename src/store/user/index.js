@@ -4,7 +4,7 @@ class UserState extends StoreModule {
 
   initState() {
     return {
-      user: null,
+      username: null,
       error: "",
       waiting: false,
     }
@@ -29,7 +29,7 @@ class UserState extends StoreModule {
       if (response.ok) {
         localStorage.setItem("token", json.result.token)
         this.setState({
-          user: json.result.user,
+          user: {id:json.result._id,name:json?.result?.profile?.name},
           error: "",
           waiting: false,
         });
@@ -84,8 +84,9 @@ class UserState extends StoreModule {
     }
   }
 
-  async userDetails() {
+  async refreshUser() {
     const token = localStorage.getItem('token')
+    if(!token) return
     this.setState({
       user: null,
       error: "",
@@ -100,13 +101,12 @@ class UserState extends StoreModule {
         }
       });
       const json = await response.json();
-
       if (response.ok) {
         this.setState({
           ...this.getState(),
-            user: json.result,
-            error: '',
-            waiting: false,
+          user: {id:json.result._id,name:json.result.profile.name},
+          error: '',
+          waiting: false,
         })
       } else {
         this.setState({

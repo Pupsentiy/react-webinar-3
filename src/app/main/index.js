@@ -13,15 +13,11 @@ import LocaleSelect from "../../containers/locale-select";
  * Главная страница - первичная загрузка каталога
  */
 function Main() {
-  const token = localStorage.getItem('token')
   const store = useStore();
 
   useInit(() => {
     store.actions.catalog.initParams();
     store.actions.categories.loadCategories()
-    if(token){
-      store.actions.user.userDetails()
-    }
   }, [], true);
 
   const {t} = useTranslate();

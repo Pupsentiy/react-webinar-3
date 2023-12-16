@@ -7,10 +7,19 @@ import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
 import Spinner from "../../components/spinner";
 import useTranslate from "../../hooks/use-translate";
+import useInit from "../../hooks/use-init";
 function Header() {
   const {t} = useTranslate();
   const cn = bem("Header")
   const store = useStore();
+
+  const token = localStorage.getItem('token')
+
+  useInit(() => {
+    if(token){
+      store.actions.user.refreshUser()
+    }
+  }, [token], true);
 
   const select = useSelector(state => ({
     user: state.user.user,
@@ -29,10 +38,8 @@ function Header() {
        <Spinner active={select.waiting}>
          {select.user ?
            <Fragment>
-             <Link to={'/Profile'}>{select.user.profile.name}</Link>
-             <Link to={'/login'}>
+             <Link to={'/profile'}>{select.user.name}</Link>
                <button className={cn('button')} onClick={callbacks.logout}>{t('user.logout')}</button>
-             </Link>
            </Fragment>
            :<Link to={'/login'}>
              <button className={cn('button')}>{t('user.signIn')}</button>
