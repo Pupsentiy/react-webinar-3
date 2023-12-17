@@ -10,8 +10,7 @@ class UserDetailsState extends StoreModule {
     }
   }
 
-  async userDetails() {
-    const token = localStorage.getItem('token')
+  async userDetails(token) {
     if(!token) return
     this.setState({
       user: null,
@@ -37,15 +36,14 @@ class UserDetailsState extends StoreModule {
       } else {
         this.setState({
           user:null,
-          error:json.result,
+          error:json.error.data?.issues[0].message || json.error.message,
           waiting: false,
         })
       }
     } catch (e) {
       this.setState({
-        user:null,
-        error:'',
-        waiting: false,
+        ...this.initState(),
+        error:e.data?.issues[0].message || e.message,
       });
     }
   }

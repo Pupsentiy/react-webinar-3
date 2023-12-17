@@ -7,6 +7,7 @@ import Article from "./article";
 import Header from "../containers/header";
 import Login from "./login";
 import Profile from "./profile";
+import PrivateRoute from "./private-route";
 
 /**
  * Приложение
@@ -23,7 +24,9 @@ function App() {
         <Route path={''} element={<Main/>}/>
         <Route path={'/articles/:id'} element={<Article/>}/>
         <Route path={'/login'} element={<Login/>}/>
-        <Route path={'/profile'} element={<Profile/>}/>
+        <Route element={<PrivateRoute/>}>
+          <Route path={'/profile'} element={<Profile/>}/>
+        </Route>
       </Routes>
       {activeModal === 'basket' && <Basket/>}
     </>

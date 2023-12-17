@@ -1,4 +1,4 @@
-import {Fragment, memo} from 'react';
+import {Fragment, memo, useEffect} from 'react';
 import SideLayout from "../../components/side-layout";
 import {cn as bem} from "@bem-react/classname";
 import './style.css'
@@ -7,24 +7,24 @@ import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
 import Spinner from "../../components/spinner";
 import useTranslate from "../../hooks/use-translate";
-import useInit from "../../hooks/use-init";
+
 function Header() {
   const {t} = useTranslate();
   const cn = bem("Header")
   const store = useStore();
 
-  const token = localStorage.getItem('token')
-
-  useInit(() => {
-    if(token){
-      store.actions.user.refreshUser()
-    }
-  }, [token], true);
-
   const select = useSelector(state => ({
     user: state.user.user,
+    token: state.user.token,
     waiting:state.user.waiting
   }))
+
+  useEffect( () => {
+    store.actions.user.setToken()
+    if(select.token){
+     void store.actions.user.refreshUser(select.token)
+    }
+  }, [select.token]);
 
   const callbacks = {
     logout: () => {

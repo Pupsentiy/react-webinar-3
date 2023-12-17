@@ -4,17 +4,24 @@ class UserState extends StoreModule {
 
   initState() {
     return {
-      username: null,
+      token:'',
+      user: null,
       error: "",
       waiting: false,
     }
   }
 
+  setToken() {
+    const token = localStorage.getItem('token')
+    this.setState({
+      ...this.getState(),
+      token,
+    })
+  }
 
   async login(auth) {
     this.setState({
-      user: null,
-      error: "",
+      ...this.initState(),
       waiting: true,
     });
     try {
@@ -29,13 +36,14 @@ class UserState extends StoreModule {
       if (response.ok) {
         localStorage.setItem("token", json.result.token)
         this.setState({
+          token:json.result.token,
           user: {id:json.result._id,name:json?.result?.profile?.name},
           error: "",
           waiting: false,
         });
       }else{
         this.setState({
-          user:null,
+          ...this.getState(),
           error: json.error.data?.issues[0].message || json.error.message,
           waiting: false,
         });
@@ -43,7 +51,7 @@ class UserState extends StoreModule {
 
     } catch (e) {
       this.setState({
-        user:null,
+       ...this.initState(),
         error: e.data?.issues[0].message || e.message,
         waiting: false,
       });
@@ -53,8 +61,7 @@ class UserState extends StoreModule {
   async logout() {
     const token = localStorage.getItem('token')
     this.setState({
-      user: null,
-      error: "",
+     ...this.initState(),
       waiting: true,
     });
     try {
@@ -70,30 +77,24 @@ class UserState extends StoreModule {
 
       if (json.result) {
         this.setState({
-          user: null,
-          error: "",
-          waiting: false,
+          ...this.initState()
         })
       }
     } catch (e) {
       this.setState({
-        user: null,
-        error: "",
-        waiting: false,
+        ...this.initState()
       });
     }
   }
 
-  async refreshUser() {
-    const token = localStorage.getItem('token')
-    if(!token) return
+  async refreshUser(token) {
+    if(!token || this.getState().waiting) return
     this.setState({
-      user: null,
-      error: "",
+      ...this.getState(),
       waiting: true,
     });
     try {
-      const response = await fetch("/api/v1/users/self?fields=*", {
+      const response = await fetch("/api/v1/users/self?fields=_id,profile(name)", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -104,21 +105,26 @@ class UserState extends StoreModule {
       if (response.ok) {
         this.setState({
           ...this.getState(),
+          token:token,
           user: {id:json.result._id,name:json.result.profile.name},
           error: '',
           waiting: false,
         })
       } else {
+        localStorage.removeItem("token")
         this.setState({
-          user:null,
-          error:json.result,
+          ...this.initState(),
+          token:'',
+          error: json.error.data?.issues[0].message || json.error.message,
           waiting: false,
         })
       }
     } catch (e) {
+      localStorage.removeItem("token")
       this.setState({
-        user:null,
-        error:'',
+        ...this.initState(),
+        token:'',
+        error:e.data?.issues[0].message || e.message,
         waiting: false,
       });
     }

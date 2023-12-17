@@ -8,15 +8,17 @@ import {Navigate} from "react-router-dom";
 import PageLayout from "../../components/page-layout";
 import LoginForm from "../../containers/login-form";
 import Text from "../../components/text";
+import {memo} from "react";
 
 function Login() {
   const {t} = useTranslate();
-  const token = localStorage.getItem('token')
+
   const select = useSelector(state => ({
-    user:state.user.user
+    user:state.user.user,
+    token: state.user.token,
   }))
 
-  if(token || select.user){
+  if(select.token || select.user){
     return <Navigate to={'/profile'} />
   }
 
@@ -35,4 +37,4 @@ function Login() {
   )
 }
 
-export default Login;
+export default memo(Login);

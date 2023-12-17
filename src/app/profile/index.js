@@ -10,27 +10,24 @@ import Navigation from "../../containers/navigation";
 import UserCard from "../../components/user-card";
 import Text from "../../components/text";
 import SideLayout from "../../components/side-layout";
-import {Navigate} from "react-router-dom";
 import Spinner from "../../components/spinner";
 
 
 function Profile(){
   const {t} = useTranslate();
   const store = useStore();
-  const token = window.localStorage.getItem('token')
-
- useInit(() =>{
-  void store.actions.userDetails.userDetails()
- } ,[])
 
   const select = useSelector(state => ({
     user: state.userDetails.user,
-    waiting:state.user.waiting
+    token: state.user.token,
+    waiting:state.user.waiting,
   }))
 
-  if (!token) {
-    return <Navigate to={"/login"}/>;
-  }
+  useInit(() =>{
+    if(!select.user){
+      void store.actions.userDetails.userDetails(select.token)
+    }
+  } ,[])
 
   return(
     <PageLayout>
