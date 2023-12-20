@@ -2,10 +2,20 @@
 
 }
 
-.List-item {
+.List-item_styleBorder{
   border-bottom: 1px dashed #ccc;
 }
 
-.List-item:first-child {
+.List-item_styleBorder:first-child {
   border-top: 1px dashed #ccc;
+}
+
+.List-item {
+}
+
+.List-item:first-child {
+}
+
+.List-item-children{
+  margin-left: 30px;
 }

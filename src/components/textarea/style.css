@@ -1,0 +1,12 @@
+.Textarea{
+  width: 98%;
+  height: 80px;
+  border: 1px solid #666666;
+  box-shadow: 0 1px 4px 0 #6666661A inset;
+  font-size: 14px;
+  line-height: 16px;
+  font-family: Arial, serif;
+  font-weight: 400;
+  letter-spacing: 0;
+  padding: 4px 5px;
+}

@@ -12,6 +12,8 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import useStore from '../../hooks/use-store';
 import useSelector from '../../hooks/use-selector';
 import useInit from '../../hooks/use-init';
+import {useDispatch} from "react-redux";
+import commentActions from "../../store-redux/comment/actions";
 
 function Login() {
 
@@ -19,7 +21,7 @@ function Login() {
   const location = useLocation();
   const navigate = useNavigate();
   const store = useStore();
-
+  const dispatch = useDispatch()
   useInit(() => {
     store.actions.session.resetErrors();
   })
@@ -50,7 +52,7 @@ function Login() {
           : '/';
         navigate(back);
       });
-
+      dispatch((commentActions.setCommentStateReset()))
     }, [data, location.state])
   };
 

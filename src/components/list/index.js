@@ -1,14 +1,54 @@
 import {memo} from 'react';
 import PropTypes from 'prop-types';
-import Item from '../item';
 import './style.css';
+import {cn as bem} from "@bem-react/classname";
+import CommentForm from "../comment-form";
 
-function List({list, renderItem}) {
+function List(props) {
+  const cn = bem('List');
+  const {
+    list,
+    renderItem,
+    selectedComment,
+    styleBorder,
+    onChange,
+    inputValue,
+    onSubmit,
+    exists,
+    onCommentReset,
+    t
+  } = props
+
   return (
-    <div className='List'>{
-      list.map(item =>
-        <div key={item._id} className='List-item'>
+    <div className={cn()}>{
+     Boolean(list?.length) && list?.map(item =>
+        <div key={item._id} className={cn('item',{styleBorder})}>
           {renderItem(item)}
+          {selectedComment?.id === item._id  &&
+            <CommentForm
+              onChange={onChange}
+              inputValue={inputValue}
+              onSubmit={onSubmit}
+              selectedComment={selectedComment}
+              exists={exists}
+              onCommentReset={onCommentReset}
+              t={t}
+            />
+          }
+          {Boolean(item?.children?.length) &&
+            <div className={cn('item-children')}>
+            <List
+              list={item?.children}
+              renderItem={renderItem}
+              selectedComment={selectedComment}
+              onChange={onChange}
+              inputValue={inputValue}
+              onSubmit={onSubmit}
+              exists={exists}
+              onCommentReset={onCommentReset}
+              t={t}
+            />
+          </div>}
         </div>
       )}
     </div>
@@ -20,11 +60,28 @@ List.propTypes = {
     _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   })).isRequired,
   renderItem: PropTypes.func,
+  exists:PropTypes.bool,
+  inputValue:PropTypes.string,
+  onSelectedComment:PropTypes.func,
+  onChange:PropTypes.func,
+  onSubmit:PropTypes.func,
+  selectedComment:PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    name: PropTypes.string}),
+  t:PropTypes.func
 };
 
 List.defaultProps = {
-  renderItem: (item) => {
+  renderItem: () => {
   },
+  onSelectedComment: () => {
+  },
+  onChange: () => {
+  },
+  onSubmit: () => {
+  },
+  t:() => {
+  }
 }
 
 export default memo(List);

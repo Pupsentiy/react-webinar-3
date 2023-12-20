@@ -47,7 +47,7 @@ function CatalogList() {
 
   return (
     <Spinner active={select.waiting}>
-      <List list={select.list} renderItem={renders.item}/>
+      <List list={select.list} renderItem={renders.item} styleBorder/>
       <Pagination count={select.count} page={select.page} limit={select.limit}
                   onChange={callbacks.onPaginate} makeLink={callbacks.makePaginatorLink}/>
     </Spinner>
