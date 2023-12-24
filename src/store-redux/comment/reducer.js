@@ -6,7 +6,7 @@ const defaultData = {
 export const initialState = {
   data: defaultData,
   oneCommentId:null,
-  commentValue:'',
+  commentValue:'Текст',
   waiting: false,
   selectedComment:null,
   error:null
@@ -52,9 +52,9 @@ function reducer(state = initialState, action) {
     case "comment/set":
       return {...state, commentValue: action.payload };
     case "selected-comment-id/set":
-      return {...state, selectedComment: action.payload, commentValue: '' };
+      return {...state, selectedComment: action.payload, commentValue: initialState.commentValue };
     case "selected-comment-reset/set":
-      return {...state, selectedComment: '', commentValue: '' };
+      return {...state, selectedComment: '', commentValue: initialState.commentValue };
     default:
       return state;
   }

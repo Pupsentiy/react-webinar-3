@@ -18,8 +18,7 @@ function CommentForm(props){
     onCommentReset,
     t
   } = props
-  const placeholder = !selectedComment?.id ?
-    t("comment.field.placeholder") :  `${t("comment.field.answer.placeholder")} ${selectedComment?.name}`
+
   const label = !selectedComment?.id ? t("comment.field.label.newComment") : t("comment.field.label.newAnswer")
   return (
     <div  className={cn()}>
@@ -38,10 +37,9 @@ function CommentForm(props){
             name={'comment'}
             onChange={onChange}
             value={inputValue}
-            placeholder={placeholder}
           />
         </Field>
-        <button type={'submit'} className={cn('btn-send')}>
+        <button type={'submit'} className={cn('btn-send')} >
           {t("comment.button.send")}
         </button>
         {selectedComment?.id && <button onClick={onCommentReset}>

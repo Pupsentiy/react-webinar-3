@@ -1,4 +1,4 @@
-import {memo} from "react";
+import {memo, useRef} from "react";
 import {cn as bem} from "@bem-react/classname";
 import './style.css'
 import Text from "../text";
@@ -12,7 +12,7 @@ function ItemComment(props){
   const classActive = props.username === props.item?.author?.profile?.name
 
   return(
-    <div className={cn()}>
+    <div className={cn()} >
       <div className={cn('wrapper')}>
         <Text
           text={props.item.author.profile.name}
@@ -33,7 +33,7 @@ function ItemComment(props){
 
       <button
         className={cn('btn')}
-        onClick={() => props.onSelectedComment(selectedComment)}
+        onClick={() => {props.onSelectedComment(selectedComment)}}
       >
         Ответить
       </button>

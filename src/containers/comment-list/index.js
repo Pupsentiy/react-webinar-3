@@ -34,13 +34,21 @@ function CommentList({articleId}){
       dispatch(commentActions.loadCommentById(oneCommentId))
     }
   }, [oneCommentId]);
-
   const callbacks = {
     onChange: useCallback((str) => {dispatch(commentActions.setComment(str))},[]),
-    onSelectedComment:useCallback((comment) => {dispatch(commentActions.setSelectedComment(comment))},[]),
+    onSelectedComment:useCallback((comment) => {
+      const text  = `${t("comment.field.answer.placeholder")} ${comment?.name}`
+      if(comment){
+        dispatch(commentActions.setSelectedComment(comment))
+        dispatch(commentActions.setComment(text))
+      }
+      },[]
+    ),
     onSubmit: useCallback((e) => {
       e.preventDefault();
-      if(!commentValue) return
+      if(!commentValue.trim().length) {
+       return
+      }
       const newComment = {
         text:commentValue,
         parent:{_id:articleId, _type:'article'}

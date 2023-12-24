@@ -21,9 +21,24 @@ function List(props) {
 
   return (
     <div className={cn()}>{
-     Boolean(list?.length) && list?.map(item =>
+     Boolean(list?.length) && list?.map((item) =>
         <div key={item._id} className={cn('item',{styleBorder})}>
           {renderItem(item)}
+
+          {Boolean(item?.children?.length) &&
+            <div className={cn('item-children')}>
+                  <List
+                    list={item?.children}
+                    renderItem={renderItem}
+                    selectedComment={selectedComment}
+                    onChange={onChange}
+                    inputValue={inputValue}
+                    onSubmit={onSubmit}
+                    exists={exists}
+                    onCommentReset={onCommentReset}
+                    t={t}
+                />
+          </div>}
           {selectedComment?.id === item._id  &&
             <CommentForm
               onChange={onChange}
@@ -35,20 +50,6 @@ function List(props) {
               t={t}
             />
           }
-          {Boolean(item?.children?.length) &&
-            <div className={cn('item-children')}>
-            <List
-              list={item?.children}
-              renderItem={renderItem}
-              selectedComment={selectedComment}
-              onChange={onChange}
-              inputValue={inputValue}
-              onSubmit={onSubmit}
-              exists={exists}
-              onCommentReset={onCommentReset}
-              t={t}
-            />
-          </div>}
         </div>
       )}
     </div>

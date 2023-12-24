@@ -19,3 +19,24 @@
 .List-item-children{
   margin-left: 30px;
 }
+
+.List-item-children:not(:first-child) {
+  margin-left: 25px;
+}
+
+.List-item-children:not(:first-child) .List-item-children {
+  margin-left: 20px;
+}
+
+.List-item-children:not(:first-child) .List-item-children .List-item-children {
+  margin-left: 15px;
+}
+.List-item-children:not(:first-child) .List-item-children .List-item-children .List-item-children {
+  margin-left: 10px;
+}
+.List-item-children:not(:first-child) .List-item-children .List-item-children .List-item-children {
+  margin-left: 10px;
+}
+.List-item-children:not(:first-child) .List-item-children .List-item-children .List-item-children .List-item-children {
+  margin-left: 5px;
+}
