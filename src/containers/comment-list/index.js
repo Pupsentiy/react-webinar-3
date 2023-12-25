@@ -1,4 +1,4 @@
-import {memo, useCallback, useEffect, useMemo} from "react";
+import {memo, useCallback, useEffect, useMemo, useRef} from "react";
 import CommentForm from "../../components/comment-form";
 import SideLayout from "../../components/side-layout";
 import Text from "../../components/text";
@@ -23,17 +23,31 @@ function CommentList({articleId}){
     waiting,
     oneCommentId
   }  = useSelectorRedux((state) => state.comment)
+const refForm = useRef(null)
 
   const select = useSelector(state => ({
     exists:state.session.exists,
     user:state.session.user
   }));
+  const onScrollToMyRef = useCallback(()=>{
+    if(refForm.current){
+      refForm.current.scrollIntoView({ behavior: 'auto',block:'center' });
+    }
+  },[refForm.current])
 
   useEffect(() => {
     if(oneCommentId){
       dispatch(commentActions.loadCommentById(oneCommentId))
     }
+
   }, [oneCommentId]);
+
+  useEffect(() => {
+    if(refForm.current && selectedComment?.id){
+      onScrollToMyRef()
+    }
+  }, [refForm.current, selectedComment?.id]);
+
   const callbacks = {
     onChange: useCallback((str) => {dispatch(commentActions.setComment(str))},[]),
     onSelectedComment:useCallback((comment) => {
@@ -68,7 +82,8 @@ function CommentList({articleId}){
     onCommentReset:useCallback((e)=>{
       e.preventDefault()
       dispatch((commentActions.setCommentStateReset()))
-    },[])
+    },[]),
+
   }
 
   const memoComments = {
@@ -82,8 +97,9 @@ function CommentList({articleId}){
         item={item}
         username={select.user?.profile?.name}
         onSelectedComment={callbacks.onSelectedComment}
+        onScrollToMyRef={onScrollToMyRef}
       />
-    ), [callbacks.onSelectedComment, select.user?.profile?.name]),
+    ), [callbacks.onSelectedComment, select.user?.profile?.name, onScrollToMyRef]),
   };
 
   return(
@@ -110,6 +126,7 @@ function CommentList({articleId}){
        exists={select.exists}
        onCommentReset={callbacks.onCommentReset}
        t={t}
+       refForm={refForm}
      />
      {!selectedComment &&
        <CommentForm
@@ -120,6 +137,7 @@ function CommentList({articleId}){
          exists={select.exists}
          onCommentReset={callbacks.onCommentReset}
          t={t}
+         refForm={refForm}
        />}
    </Spinner>
     </SideLayout>

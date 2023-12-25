@@ -16,17 +16,18 @@ function List(props) {
     onSubmit,
     exists,
     onCommentReset,
-    t
+    t,
+    refForm
   } = props
 
   return (
-    <div className={cn()}>{
+    <div className={cn()} >{
      Boolean(list?.length) && list?.map((item) =>
         <div key={item._id} className={cn('item',{styleBorder})}>
           {renderItem(item)}
 
           {Boolean(item?.children?.length) &&
-            <div className={cn('item-children')}>
+            <div className={cn('item-children')} >
                   <List
                     list={item?.children}
                     renderItem={renderItem}
@@ -37,6 +38,7 @@ function List(props) {
                     exists={exists}
                     onCommentReset={onCommentReset}
                     t={t}
+                    refForm={refForm}
                 />
           </div>}
           {selectedComment?.id === item._id  &&
@@ -48,6 +50,7 @@ function List(props) {
               exists={exists}
               onCommentReset={onCommentReset}
               t={t}
+              refForm={refForm}
             />
           }
         </div>
@@ -69,7 +72,11 @@ List.propTypes = {
   selectedComment:PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     name: PropTypes.string}),
-  t:PropTypes.func
+  t:PropTypes.func,
+  refForm: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ])
 };
 
 List.defaultProps = {

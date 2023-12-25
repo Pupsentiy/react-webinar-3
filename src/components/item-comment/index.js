@@ -1,4 +1,4 @@
-import {memo, useRef} from "react";
+import {memo} from "react";
 import {cn as bem} from "@bem-react/classname";
 import './style.css'
 import Text from "../text";
@@ -33,7 +33,10 @@ function ItemComment(props){
 
       <button
         className={cn('btn')}
-        onClick={() => {props.onSelectedComment(selectedComment)}}
+        onClick={() => {
+          props.onSelectedComment(selectedComment)
+          props.onScrollToMyRef()
+        }}
       >
         Ответить
       </button>

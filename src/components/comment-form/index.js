@@ -16,12 +16,13 @@ function CommentForm(props){
     selectedComment,
     exists,
     onCommentReset,
-    t
+    t,
+    refForm
   } = props
 
   const label = !selectedComment?.id ? t("comment.field.label.newComment") : t("comment.field.label.newAnswer")
   return (
-    <div  className={cn()}>
+    <div  className={cn()} ref={refForm}>
       {exists ? <form onSubmit={onSubmit}>
         <Field
           label={
@@ -47,7 +48,7 @@ function CommentForm(props){
         </button>}
       </form>
         :
-        <div className={cn('wrapper-message')}>
+        <div className={cn('wrapper-message')} ref={refForm}>
       <Link to={'/login'}><Text text={t("comment.link.singIn")} color={'link'}/></Link>
       <Text text={t("comment.link.label")}/>
           {selectedComment?.id && <button className={cn('btn-cancel')} onClick={onCommentReset}>{t("comment.button.cancel")}</button>}
@@ -66,7 +67,11 @@ CommentForm.propTypes = {
   selectedComment: PropTypes.shape({
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   name: PropTypes.string}),
-  t:PropTypes.func
+  t:PropTypes.func,
+  refChildren: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ])
 }
 
 CommentForm.defaultProps = {
